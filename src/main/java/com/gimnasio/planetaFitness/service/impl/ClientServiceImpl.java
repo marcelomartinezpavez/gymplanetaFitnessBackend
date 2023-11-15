@@ -66,7 +66,21 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setExpiredAt(clienteResp.getExpiredAt());
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
-            cliente.setPlan(clienteResp.getPlan());
+
+            if(clienteResp.getPlan() != null){
+                PlanDto planDto = new PlanDto();
+                planDto.setId(clienteResp.getPlan().getId());
+                planDto.setDescription(clienteResp.getPlan().getDescription());
+                planDto.setEnabled(clienteResp.getPlan().isEnabled());
+                planDto.setName(clienteResp.getPlan().getName());
+                planDto.setPeriod(clienteResp.getPlan().getPeriod());
+                planDto.setPrice(clienteResp.getPlan().getPrice());
+
+                //cliente.setPlan(clienteResp.getPlan());
+                cliente.setPlan(planDto);
+            }else{
+                cliente.setPlan(null);
+            }
             cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
             clienteDtoList.add(cliente);
@@ -106,7 +120,21 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setExpiredAt(clienteResp.getExpiredAt());
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
-            cliente.setPlan(clienteResp.getPlan());
+            if(clienteResp.getPlan() != null){
+                PlanDto planDto = new PlanDto();
+                planDto.setId(clienteResp.getPlan().getId());
+                planDto.setDescription(clienteResp.getPlan().getDescription());
+                planDto.setEnabled(clienteResp.getPlan().isEnabled());
+                planDto.setName(clienteResp.getPlan().getName());
+                planDto.setPeriod(clienteResp.getPlan().getPeriod());
+                planDto.setPrice(clienteResp.getPlan().getPrice());
+                
+                //cliente.setPlan(clienteResp.getPlan());
+                cliente.setPlan(planDto);
+            }else{
+                cliente.setPlan(null);
+            }
+
             cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
 
@@ -142,7 +170,21 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setExpiredAt(clienteResp.getExpiredAt());
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
-            cliente.setPlan(clienteResp.getPlan());
+
+            if(clienteResp.getPlan() != null){
+            PlanDto planDto = new PlanDto();
+            planDto.setId(clienteResp.getPlan().getId());
+            planDto.setDescription(clienteResp.getPlan().getDescription());
+            planDto.setEnabled(clienteResp.getPlan().isEnabled());
+            planDto.setName(clienteResp.getPlan().getName());
+            planDto.setPeriod(clienteResp.getPlan().getPeriod());
+            planDto.setPrice(clienteResp.getPlan().getPrice());
+
+            //cliente.setPlan(clienteResp.getPlan());
+            cliente.setPlan(planDto);
+            }else{
+                cliente.setPlan(null);
+            }
             cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
             cliente.setEmpresa(empresaDto);

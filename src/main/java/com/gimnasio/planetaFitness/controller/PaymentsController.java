@@ -9,7 +9,6 @@ import com.gimnasio.planetaFitness.repository.EmpresaRepository;
 import com.gimnasio.planetaFitness.repository.PaymentsRepository;
 import com.gimnasio.planetaFitness.repository.PlanRepository;
 import com.gimnasio.planetaFitness.request.PaymentRequest;
-import com.gimnasio.planetaFitness.response.PaymentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

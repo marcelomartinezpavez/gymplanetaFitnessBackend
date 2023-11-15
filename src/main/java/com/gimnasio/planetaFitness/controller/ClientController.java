@@ -1,8 +1,6 @@
 package com.gimnasio.planetaFitness.controller;
 
 import com.gimnasio.planetaFitness.dto.ClientDto;
-import com.gimnasio.planetaFitness.dto.EmpresaDto;
-import com.gimnasio.planetaFitness.dto.PlanDto;
 import com.gimnasio.planetaFitness.repository.EmpresaRepository;
 import com.gimnasio.planetaFitness.service.ClientService;
 import com.gimnasio.planetaFitness.service.PlanService;
@@ -11,10 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
 
 @Controller  
 @RequestMapping("client")
