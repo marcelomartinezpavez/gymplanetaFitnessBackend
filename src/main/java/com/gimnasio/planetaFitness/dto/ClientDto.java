@@ -1,10 +1,14 @@
 package com.gimnasio.planetaFitness.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -43,9 +47,10 @@ public class ClientDto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private PlanDto plan;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_payment", referencedColumnName = "id")
-    private PaymentsDto payment;
+    @OneToMany(mappedBy = "client")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    //@JsonIgnore
+    private List<PaymentsDto> payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "empresa_id")
@@ -165,13 +170,22 @@ public class ClientDto implements Serializable {
         this.plan = plan;
     }
 
-    public PaymentsDto getPayment() {
+    /*
+    public void setPayment(PaymentsDto paymentsDto){
+        payment.add(paymentsDto);
+    }
+
+    public Set<PaymentsDto> getPayment(){
+        return payment;
+    }*/
+    /*public List<PaymentsDto> getPayment() {
         return payment;
     }
 
-    public void setPayment(PaymentsDto payment) {
+    public void setPayment(List<PaymentsDto> payment) {
         this.payment = payment;
     }
+    */
 
     public EmpresaDto getEmpresa() {
         return empresa;
@@ -179,5 +193,14 @@ public class ClientDto implements Serializable {
 
     public void setEmpresa(EmpresaDto empresa) {
         this.empresa = empresa;
+    }
+
+    @JsonManagedReference
+    public List<PaymentsDto> getPayment() {
+        return payment;
+    }
+
+    public void setPayment(List<PaymentsDto> payment) {
+        this.payment = payment;
     }
 }

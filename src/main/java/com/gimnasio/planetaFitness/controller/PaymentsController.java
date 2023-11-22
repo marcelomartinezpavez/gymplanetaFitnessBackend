@@ -95,10 +95,16 @@ public class PaymentsController {
 
         try {
             PaymentsDto paymentAgregado = paymentsRepository.save(paymentDto);
+            ClientDto clientDto = clientDtoOptional.get();
+            //clientDto.setPayment(paymentAgregado);
+            clientDto.setExpiredAt(paymentDto.getExpiredAt());
+            clientRepository.save(clientDto);
+            //return new ResponseEntity(paymentDto, HttpStatus.CREATED);
 
         }catch (Exception e){
             return new ResponseEntity("Ocurrio un error interno",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
 
         return new ResponseEntity(paymentDto, HttpStatus.CREATED);
 

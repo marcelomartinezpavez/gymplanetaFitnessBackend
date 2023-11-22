@@ -10,6 +10,8 @@ public interface ClientService {
 
     ResponseEntity getClientByRut(String rut);
 
+    ResponseEntity getClientByName(String name);
+
     ResponseEntity createClient(com.gimnasio.planetaFitness.request.ClientRequest newCliente);
 
     ResponseEntity updateClient(com.gimnasio.planetaFitness.request.ClientRequest newCliente);

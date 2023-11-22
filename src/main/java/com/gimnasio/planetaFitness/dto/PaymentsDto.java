@@ -1,5 +1,6 @@
 package com.gimnasio.planetaFitness.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -87,6 +88,7 @@ public class PaymentsDto implements Serializable {
         this.typeOfPayment = typeOfPayment;
     }
 
+    @JsonBackReference
     public ClientDto getClient() {
         return client;
     }

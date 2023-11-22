@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.ClientService {
@@ -67,6 +64,12 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
 
+            List<PaymentsDto> paymentsDtoList = paymentRepository.findByRutCliente(clienteResp.getRut());
+
+            if(!paymentsDtoList.isEmpty()){
+                cliente.setPayment(paymentsDtoList);
+            }
+
             if(clienteResp.getPlan() != null){
                 PlanDto planDto = new PlanDto();
                 planDto.setId(clienteResp.getPlan().getId());
@@ -81,7 +84,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             }else{
                 cliente.setPlan(null);
             }
-            cliente.setPayment(clienteResp.getPayment());
+            //cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
             clienteDtoList.add(cliente);
         }
@@ -120,6 +123,13 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setExpiredAt(clienteResp.getExpiredAt());
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
+
+            List<PaymentsDto> paymentsDtoList = paymentRepository.findByRutCliente(clienteResp.getRut());
+
+            if(!paymentsDtoList.isEmpty()){
+                cliente.setPayment(paymentsDtoList);
+            }
+
             if(clienteResp.getPlan() != null){
                 PlanDto planDto = new PlanDto();
                 planDto.setId(clienteResp.getPlan().getId());
@@ -135,7 +145,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
                 cliente.setPlan(null);
             }
 
-            cliente.setPayment(clienteResp.getPayment());
+            //cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
 
             cliente.setEmpresa(empresaDto);
@@ -171,21 +181,86 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setName(clienteResp.getName());
             cliente.setPhone(clienteResp.getPhone());
 
-            if(clienteResp.getPlan() != null){
-            PlanDto planDto = new PlanDto();
-            planDto.setId(clienteResp.getPlan().getId());
-            planDto.setDescription(clienteResp.getPlan().getDescription());
-            planDto.setEnabled(clienteResp.getPlan().isEnabled());
-            planDto.setName(clienteResp.getPlan().getName());
-            planDto.setPeriod(clienteResp.getPlan().getPeriod());
-            planDto.setPrice(clienteResp.getPlan().getPrice());
 
-            //cliente.setPlan(clienteResp.getPlan());
-            cliente.setPlan(planDto);
+            List<PaymentsDto> paymentsDtoList = paymentRepository.findByRutCliente(clienteResp.getRut());
+
+            if(!paymentsDtoList.isEmpty()){
+                cliente.setPayment(paymentsDtoList);
+            }
+
+            if(clienteResp.getPlan() != null){
+                PlanDto planDto = new PlanDto();
+                planDto.setId(clienteResp.getPlan().getId());
+                planDto.setDescription(clienteResp.getPlan().getDescription());
+                planDto.setEnabled(clienteResp.getPlan().isEnabled());
+                planDto.setName(clienteResp.getPlan().getName());
+                planDto.setPeriod(clienteResp.getPlan().getPeriod());
+                planDto.setPrice(clienteResp.getPlan().getPrice());
+
+                //cliente.setPlan(clienteResp.getPlan());
+                cliente.setPlan(planDto);
             }else{
                 cliente.setPlan(null);
             }
-            cliente.setPayment(clienteResp.getPayment());
+            //cliente.setPayment(clienteResp.getPayment());
+            cliente.setEmpresa(empresaDto);
+            cliente.setEmpresa(empresaDto);
+            return new ResponseEntity(cliente,HttpStatus.OK);
+
+        }else{
+            return new ResponseEntity("Cliente no se encuentra",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity getClientByName(String name){
+        Optional<ClientDto> clientes = clienteRepository.getClientByName(name);;
+        if(clientes.isPresent()){
+            ClientDto cliente= new ClientDto();
+            EmpresaDto empresaDto = new EmpresaDto();
+
+            ClientDto clienteResp = clientes.get();
+            empresaDto.setId(clienteResp.getEmpresa().getId());
+            empresaDto.setNombre(clienteResp.getEmpresa().getNombre());
+            empresaDto.setRut(clienteResp.getEmpresa().getRut());
+            empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
+
+            cliente.setRut(clienteResp.getRut());
+            cliente.setAddress(clienteResp.getAddress());
+            cliente.setComuna(clienteResp.getComuna());
+            cliente.setCity(clienteResp.getCity());
+            cliente.setComuna(clienteResp.getComuna());
+            cliente.setAuxiliarPhone(clienteResp.getAuxiliarPhone());
+            cliente.setEmail(clienteResp.getEmail());
+            cliente.setBirthDate(clienteResp.getBirthDate());
+            cliente.setRut(clienteResp.getRut());
+            cliente.setEmail(clienteResp.getEmail());
+            cliente.setEnabled(clienteResp.isEnabled());
+            cliente.setExpiredAt(clienteResp.getExpiredAt());
+            cliente.setName(clienteResp.getName());
+            cliente.setPhone(clienteResp.getPhone());
+
+
+            List<PaymentsDto> paymentsDtoList = paymentRepository.findByRutCliente(clienteResp.getRut());
+
+            if(!paymentsDtoList.isEmpty()){
+                cliente.setPayment(paymentsDtoList);
+            }
+
+            if(clienteResp.getPlan() != null){
+                PlanDto planDto = new PlanDto();
+                planDto.setId(clienteResp.getPlan().getId());
+                planDto.setDescription(clienteResp.getPlan().getDescription());
+                planDto.setEnabled(clienteResp.getPlan().isEnabled());
+                planDto.setName(clienteResp.getPlan().getName());
+                planDto.setPeriod(clienteResp.getPlan().getPeriod());
+                planDto.setPrice(clienteResp.getPlan().getPrice());
+
+                //cliente.setPlan(clienteResp.getPlan());
+                cliente.setPlan(planDto);
+            }else{
+                cliente.setPlan(null);
+            }
+            //cliente.setPayment(clienteResp.getPayment());
             cliente.setEmpresa(empresaDto);
             cliente.setEmpresa(empresaDto);
             return new ResponseEntity(cliente,HttpStatus.OK);
@@ -231,7 +306,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setName(newCliente.getName());
             cliente.setPhone(newCliente.getPhone());
             cliente.setPlan(respPlan.get());
-            cliente.setPayment(respPayment.isPresent()?respPayment.get():null);
+            //cliente.setPayment(respPayment.isPresent()?Collections.singletonList(respPayment.get()):Collections.emptyList());
             cliente.setEmpresa(respEmpresa.get());
         }else{
             return new ResponseEntity("Error Empresa no existe",HttpStatus.BAD_REQUEST);
@@ -274,7 +349,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setPlan(respPlan.isPresent()?respPlan.get():null);
 
 
-            cliente.setPayment(respPayment.isPresent()?respPayment.get():null);
+            //cliente.setPayment(respPayment.isPresent()?Collections.singletonList(respPayment.get()):Collections.emptyList());
             cliente.setEmpresa(respEmpresa.get());
         }else{
             return new ResponseEntity("Error Empresa no existe",HttpStatus.BAD_REQUEST);
