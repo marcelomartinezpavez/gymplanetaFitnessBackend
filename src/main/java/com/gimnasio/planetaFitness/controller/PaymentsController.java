@@ -9,6 +9,8 @@ import com.gimnasio.planetaFitness.repository.EmpresaRepository;
 import com.gimnasio.planetaFitness.repository.PaymentsRepository;
 import com.gimnasio.planetaFitness.repository.PlanRepository;
 import com.gimnasio.planetaFitness.request.PaymentRequest;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
+import java.sql.Date;
 import java.util.*;
 
 @Controller
@@ -40,9 +44,39 @@ public class PaymentsController {
     ResponseEntity getAllPayments() {
         System.out.println("getAll Payment");
 
+        //return paymentsRepository.findAll();
         List<PaymentsDto> paymentsDtoList = paymentsRepository.findAll();
+        List <PaymentsDto> resp = new ArrayList<>();
 
-        return new ResponseEntity<>(paymentsDtoList, HttpStatus.OK);
+        for(PaymentsDto payment: paymentsDtoList){
+            PaymentsDto paymentsDto = new PaymentsDto();
+            ClientDto clientDto = new ClientDto();
+            clientDto.setRut(payment.getClient().getRut());
+            clientDto.setAddress(payment.getClient().getAddress());
+            clientDto.setComuna(payment.getClient().getComuna());
+            clientDto.setCity(payment.getClient().getCity());
+            clientDto.setAuxiliarPhone(payment.getClient().getAuxiliarPhone());
+            clientDto.setBirthDate(payment.getClient().getBirthDate());
+            clientDto.setEmail(payment.getClient().getEmail());
+            clientDto.setEnabled(payment.getClient().isEnabled());
+            clientDto.setExpiredAt(payment.getClient().getExpiredAt());
+            clientDto.setName(payment.getClient().getName());
+            clientDto.setPhone(payment.getClient().getPhone());
+
+            paymentsDto.setId(payment.getId());
+            paymentsDto.setDate(payment.getDate());
+            paymentsDto.setExpiredAt(payment.getExpiredAt());
+            paymentsDto.setPrice(payment.getPrice());
+            paymentsDto.setTypeOfPayment(payment.getTypeOfPayment());
+            paymentsDto.setClient(clientDto);
+            paymentsDto.setPlan(payment.getPlan());
+            paymentsDto.setEmpresa(payment.getEmpresa());
+            resp.add(paymentsDto);
+
+
+        }
+
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @GetMapping(value = "/cliente/{rutCliente}", produces = "application/json")

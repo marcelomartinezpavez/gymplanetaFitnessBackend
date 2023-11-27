@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "payments")
 public class PaymentsDto implements Serializable {
@@ -88,7 +88,7 @@ public class PaymentsDto implements Serializable {
         this.typeOfPayment = typeOfPayment;
     }
 
-    @JsonBackReference
+    //@JsonBackReference
     public ClientDto getClient() {
         return client;
     }

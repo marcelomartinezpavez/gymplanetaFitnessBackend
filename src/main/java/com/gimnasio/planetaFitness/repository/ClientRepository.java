@@ -20,6 +20,9 @@ public interface ClientRepository extends JpaRepository<ClientDto, Long> {
 
     @Query(value = "select * from clients where name like :name%", nativeQuery = true)
     Optional<ClientDto> getClientByName(String name);
+
+    @Query(value = "select * from clients where rut like :rut%", nativeQuery = true)
+    Optional<ClientDto> getClienteByLikeRut(String rut);
     @Query(value = "select * from clients c where c.empresa_id = :idEmpresa", nativeQuery = true)
     List<ClientDto> findByEmpresaId(long idEmpresa);
 

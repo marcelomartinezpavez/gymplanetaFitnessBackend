@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "clients")
 public class ClientDto implements Serializable {
@@ -48,8 +48,7 @@ public class ClientDto implements Serializable {
     private PlanDto plan;
 
     @OneToMany(mappedBy = "client")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    //@JsonIgnore
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private List<PaymentsDto> payment;
 
     @ManyToOne(fetch = FetchType.LAZY)

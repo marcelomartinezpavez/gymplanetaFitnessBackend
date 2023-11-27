@@ -47,6 +47,7 @@ public interface PaymentsRepository extends JpaRepository<com.gimnasio.planetaFi
     //OrdenTrabajoDto findById(String id);
 
     //@Query(value="{category:'?0'}", fields="{'name' : 1, 'quantity' : 1}")
+    //@Query(value = "select * from payments p join clients c on p.rut = c.rut", nativeQuery = true)
     @Query(value = "select * from payments", nativeQuery = true)
     List<PaymentsDto> findAll();
 

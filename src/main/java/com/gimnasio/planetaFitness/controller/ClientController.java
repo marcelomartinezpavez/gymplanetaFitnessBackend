@@ -48,6 +48,12 @@ public class ClientController {
     public @ResponseBody ResponseEntity getClienteByName(@PathVariable String name) {
         return clienteService.getClientByName(name);
     }
+
+    @GetMapping(value = "/rut/{rut}", produces = "application/json")
+    @CrossOrigin(origins = "*")
+    public @ResponseBody ResponseEntity getClienteByLikeRut(@PathVariable String rut) {
+        return clienteService.getClienteByLikeRut(rut);
+    }
     @PostMapping(path = "/insert",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
