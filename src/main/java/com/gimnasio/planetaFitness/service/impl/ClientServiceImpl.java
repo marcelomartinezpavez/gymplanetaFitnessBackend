@@ -67,7 +67,21 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             List<PaymentsDto> paymentsDtoList = paymentRepository.findByRutCliente(clienteResp.getRut());
 
             if(!paymentsDtoList.isEmpty()){
-                cliente.setPayment(paymentsDtoList);
+                List<PaymentsDto> listpaymentsDto = new ArrayList<>();
+                for (PaymentsDto payment: paymentsDtoList){
+                    PaymentsDto paymentsDto = new PaymentsDto();
+                    paymentsDto.setId(payment.getId());
+                    paymentsDto.setDate(payment.getDate());
+                    paymentsDto.setExpiredAt(payment.getExpiredAt());
+                    paymentsDto.setPrice(payment.getPrice());
+                    paymentsDto.setTypeOfPayment(payment.getTypeOfPayment());
+                    //paymentsDto.setClient(clientDto);
+                    paymentsDto.setPlan(payment.getPlan());
+                    paymentsDto.setEmpresa(payment.getEmpresa());
+                    listpaymentsDto.add(paymentsDto);
+                }
+                cliente.setPayment(listpaymentsDto);
+
             }
 
             if(clienteResp.getPlan() != null){
@@ -89,6 +103,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             clienteDtoList.add(cliente);
         }
         return new ResponseEntity(clienteDtoList, HttpStatus.OK);
+        //return new ResponseEntity(resp, HttpStatus.OK);
     }
 
     public ResponseEntity getClientByCompany(long idempresa){
