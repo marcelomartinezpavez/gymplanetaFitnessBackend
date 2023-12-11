@@ -25,6 +25,7 @@ public class PaymentsDto implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rut")
+    @JsonBackReference
     private ClientDto client;
 
 

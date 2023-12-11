@@ -48,7 +48,7 @@ public class ClientDto implements Serializable {
     private PlanDto plan;
 
     @OneToMany(mappedBy = "client")
-    @LazyCollection(LazyCollectionOption.EXTRA)
+    @JsonManagedReference
     private List<PaymentsDto> payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
