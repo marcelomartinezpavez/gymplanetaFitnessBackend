@@ -461,7 +461,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setBirthDate(newCliente.getBirthDate());
             cliente.setRut(newCliente.getRut());
             cliente.setEmail(newCliente.getEmail());
-            //cliente.setEnabled(newCliente.isEnabled());
+            cliente.setEnabled(newCliente.isEnabled());
             cliente.setExpiredAt(newCliente.getExpiredAt());
             cliente.setName(newCliente.getName());
             cliente.setPhone(newCliente.getPhone());
