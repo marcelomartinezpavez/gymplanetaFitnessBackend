@@ -5,6 +5,10 @@ import com.gimnasio.planetaFitness.dto.ClientDto;
 import com.gimnasio.planetaFitness.dto.EmpresaDto;
 import com.gimnasio.planetaFitness.dto.PaymentsDto;
 import com.gimnasio.planetaFitness.dto.PlanDto;
+import com.gimnasio.planetaFitness.mapper.ClientMapper;
+import com.gimnasio.planetaFitness.mapper.EmpresaMapper;
+import com.gimnasio.planetaFitness.mapper.PaymentMapper;
+import com.gimnasio.planetaFitness.mapper.PlanMapper;
 import com.gimnasio.planetaFitness.repository.ClientRepository;
 import com.gimnasio.planetaFitness.repository.EmpresaRepository;
 import com.gimnasio.planetaFitness.repository.PaymentsRepository;
@@ -44,11 +48,12 @@ public class PaymentsController {
         System.out.println("getAll Payment");
 
         List<PaymentsDto> paymentsDtoList = paymentsRepository.findAll();
-        List <PaymentsDto> resp = new ArrayList<>();
+        List <PaymentMapper> resp = new ArrayList<>();
 
         for(PaymentsDto payment: paymentsDtoList){
-            PaymentsDto paymentsDto = new PaymentsDto();
-            ClientDto clientDto = new ClientDto();
+            PaymentMapper paymentsDto = new PaymentMapper();
+            ClientMapper clientDto = new ClientMapper();
+
             clientDto.setRut(payment.getClient().getRut());
             clientDto.setAddress(payment.getClient().getAddress());
             clientDto.setComuna(payment.getClient().getComuna());
@@ -67,8 +72,25 @@ public class PaymentsController {
             paymentsDto.setPrice(payment.getPrice());
             paymentsDto.setTypeOfPayment(payment.getTypeOfPayment());
             paymentsDto.setClient(clientDto);
-            paymentsDto.setPlan(payment.getPlan());
-            paymentsDto.setEmpresa(payment.getEmpresa());
+
+            PlanMapper planMapper = new PlanMapper();
+            planMapper.setId(payment.getPlan().getId());
+            planMapper.setDescription(payment.getPlan().getDescription());
+            planMapper.setEnabled(payment.getPlan().isEnabled());
+            planMapper.setName(payment.getPlan().getName());
+            planMapper.setPeriod(payment.getPlan().getPeriod());
+            planMapper.setPrice(payment.getPlan().getPrice());
+
+            paymentsDto.setPlan(planMapper);
+
+            EmpresaMapper empresaMapper = new EmpresaMapper();
+            empresaMapper.setId(payment.getEmpresa().getId());
+            empresaMapper.setDireccion(payment.getEmpresa().getDireccion());
+            empresaMapper.setNombre(payment.getEmpresa().getNombre());
+            empresaMapper.setRut(payment.getEmpresa().getRut());
+            //private Set<ClientDto> clients;
+
+            paymentsDto.setEmpresa(empresaMapper);
             resp.add(paymentsDto);
         }
         return new ResponseEntity<>(resp, HttpStatus.OK);
