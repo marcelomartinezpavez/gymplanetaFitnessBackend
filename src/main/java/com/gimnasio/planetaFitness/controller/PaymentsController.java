@@ -147,10 +147,11 @@ public class PaymentsController {
         clientDto.setAuxiliarPhone(clientDtoOptional.get().getAuxiliarPhone());
         clientDto.setBirthDate(clientDtoOptional.get().getBirthDate());
         clientDto.setEmail(clientDtoOptional.get().getEmail());
-        clientDto.setEnabled(clientDtoOptional.get().getPlan().isEnabled());
+        clientDto.setEnabled(clientDtoOptional.get().isEnabled());
         clientDto.setExpiredAt(clientDtoOptional.get().getExpiredAt());
         clientDto.setName(clientDtoOptional.get().getName());
         clientDto.setPhone(clientDtoOptional.get().getPhone());
+
         clientDto.setPlan(planDtoOptional.get());
 
         clientDto.setEmpresa(empresaDtoOptional.get());
@@ -168,10 +169,10 @@ public class PaymentsController {
 
         try {
             PaymentsDto paymentAgregado = paymentsRepository.save(paymentDto);
-            ClientDto newClientDto = clientDtoOptional.get();
+            //ClientDto newClientDto = clientDtoOptional.get();
             //clientDto.setPayment(paymentAgregado);
-            newClientDto.setExpiredAt(paymentDto.getExpiredAt());
-            clientRepository.save(newClientDto);
+            clientDto.setExpiredAt(paymentDto.getExpiredAt());
+            clientRepository.save(clientDto);
             //return new ResponseEntity(paymentDto, HttpStatus.CREATED);
 
         }catch (Exception e){
