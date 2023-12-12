@@ -1,5 +1,6 @@
 package com.gimnasio.planetaFitness.controller;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gimnasio.planetaFitness.dto.ClientDto;
 import com.gimnasio.planetaFitness.dto.EmpresaDto;
 import com.gimnasio.planetaFitness.dto.PaymentsDto;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
+import java.sql.Date;
 import java.util.*;
 
 @Controller
@@ -136,8 +139,27 @@ public class PaymentsController {
             return new ResponseEntity<>("Valor de plan no concuerda con el pago",HttpStatus.CONFLICT);
         }
 
+        ClientDto clientDto = new ClientDto();
+        clientDto.setRut(clientDtoOptional.get().getRut());
+        clientDto.setAddress(clientDtoOptional.get().getAddress());
+        clientDto.setComuna(clientDtoOptional.get().getComuna());
+        clientDto.setCity(clientDtoOptional.get().getCity());
+        clientDto.setAuxiliarPhone(clientDtoOptional.get().getAuxiliarPhone());
+        clientDto.setBirthDate(clientDtoOptional.get().getBirthDate());
+        clientDto.setEmail(clientDtoOptional.get().getEmail());
+        clientDto.setEnabled(clientDtoOptional.get().getPlan().isEnabled());
+        clientDto.setExpiredAt(clientDtoOptional.get().getExpiredAt());
+        clientDto.setName(clientDtoOptional.get().getName());
+        clientDto.setPhone(clientDtoOptional.get().getPhone());
+        clientDto.setPlan(planDtoOptional.get());
+
+        clientDto.setEmpresa(empresaDtoOptional.get());
+
+        paymentDto.setClient(clientDto);
+
         paymentDto.setEmpresa(empresaDtoOptional.get());
         paymentDto.setDate(newPayment.getDate());
+
         paymentDto.setClient(clientDtoOptional.get());
         paymentDto.setTypeOfPayment(newPayment.getTypeOfPayment());
         paymentDto.setPlan(planDtoOptional.get());
@@ -146,10 +168,10 @@ public class PaymentsController {
 
         try {
             PaymentsDto paymentAgregado = paymentsRepository.save(paymentDto);
-            ClientDto clientDto = clientDtoOptional.get();
+            ClientDto newClientDto = clientDtoOptional.get();
             //clientDto.setPayment(paymentAgregado);
-            clientDto.setExpiredAt(paymentDto.getExpiredAt());
-            clientRepository.save(clientDto);
+            newClientDto.setExpiredAt(paymentDto.getExpiredAt());
+            clientRepository.save(newClientDto);
             //return new ResponseEntity(paymentDto, HttpStatus.CREATED);
 
         }catch (Exception e){
