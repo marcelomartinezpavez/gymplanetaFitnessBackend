@@ -47,6 +47,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             empresaDto.setRut(clienteResp.getEmpresa().getRut());
             empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
 
+            cliente.setNumberClient(clienteResp.getNumberClient());
             cliente.setRut(clienteResp.getRut());
             cliente.setAddress(clienteResp.getAddress());
             cliente.setComuna(clienteResp.getComuna());
@@ -121,6 +122,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             empresaDto.setRut(clienteResp.getEmpresa().getRut());
             empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
 
+            cliente.setNumberClient(clienteResp.getNumberClient());
             cliente.setRut(clienteResp.getRut());
             cliente.setAddress(clienteResp.getAddress());
             cliente.setComuna(clienteResp.getComuna());
@@ -191,6 +193,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             empresaDto.setRut(clienteResp.getEmpresa().getRut());
             empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
 
+            cliente.setNumberClient(clienteResp.getNumberClient());
             cliente.setRut(clienteResp.getRut());
             cliente.setAddress(clienteResp.getAddress());
             cliente.setComuna(clienteResp.getComuna());
@@ -262,6 +265,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             empresaDto.setRut(clienteResp.getEmpresa().getRut());
             empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
 
+            cliente.setNumberClient(cliente.getNumberClient());
             cliente.setRut(clienteResp.getRut());
             cliente.setAddress(clienteResp.getAddress());
             cliente.setComuna(clienteResp.getComuna());
@@ -333,6 +337,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             empresaDto.setRut(clienteResp.getEmpresa().getRut());
             empresaDto.setDireccion(clienteResp.getEmpresa().getDireccion());
 
+            cliente.setNumberClient(clienteResp.getNumberClient());
             cliente.setRut(clienteResp.getRut());
             cliente.setAddress(clienteResp.getAddress());
             cliente.setComuna(clienteResp.getComuna());
@@ -409,10 +414,10 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
         ClientDto cliente = new ClientDto();
         Optional<EmpresaDto> respEmpresa = empresaRepository.findById(newCliente.getIdEmpresa());
         Optional<PlanDto> respPlan = planRepository.findById(newCliente.getIdPlan());
-
-        Optional<PaymentsDto> respPayment = paymentRepository.findById(newCliente.getIdPayment());
+        //Optional<PaymentsDto> respPayment = paymentRepository.findById(newCliente.getIdPayment());
 
         if(respEmpresa.isPresent()) {
+            //cliente.setNumberClient(newCliente.getNumberClient());
             cliente.setRut(newCliente.getRut());
             cliente.setAddress(newCliente.getAddress());
             cliente.setComuna(newCliente.getComuna());
@@ -434,7 +439,8 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             return new ResponseEntity("Error Empresa no existe",HttpStatus.BAD_REQUEST);
         }
         try {
-            clienteRepository.save(cliente);
+            cliente.setNumberClient(clienteRepository.findNextVal());
+            ClientDto clteResp = clienteRepository.save(cliente);
         }catch (Exception e){
             return new ResponseEntity("Error interno al crear Cliente", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -452,6 +458,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
 
 
         if(respEmpresa.isPresent()) {
+            cliente.setNumberClient(newCliente.getNumberClient());
             cliente.setRut(newCliente.getRut());
             cliente.setAddress(newCliente.getAddress());
             cliente.setComuna(newCliente.getComuna());
@@ -465,12 +472,7 @@ public class ClientServiceImpl implements com.gimnasio.planetaFitness.service.Cl
             cliente.setExpiredAt(newCliente.getExpiredAt());
             cliente.setName(newCliente.getName());
             cliente.setPhone(newCliente.getPhone());
-
-            
-
             cliente.setPlan(respPlan.isPresent()?respPlan.get():null);
-
-
             //cliente.setPayment(respPayment.isPresent()?Collections.singletonList(respPayment.get()):Collections.emptyList());
             cliente.setEmpresa(respEmpresa.get());
         }else{

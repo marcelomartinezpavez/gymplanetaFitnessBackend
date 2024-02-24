@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.util.List;
 
 public class ClientMapper {
+
+    private Long numberClient;
     private String rut;
     private String address;
     private String comuna;
@@ -24,6 +26,14 @@ public class ClientMapper {
     private PlanDto plan;
     private List<PaymentsDto> payment;
     private EmpresaDto empresa;
+
+    public Long getNumberClient() {
+        return numberClient;
+    }
+
+    public void setNumberClient(Long numberClient) {
+        this.numberClient = numberClient;
+    }
 
     public String getRut() {
         return rut;

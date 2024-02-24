@@ -14,6 +14,8 @@ public interface ClientRepository extends JpaRepository<ClientDto, Long> {
     //@Override
     Optional<ClientDto> findByRut(String aLong);
 
+    @Query(value = "select nextval('client_id_seq')", nativeQuery = true)
+    long findNextVal();
 
     @Query(value = "select * from clients c where c.rut = :rut", nativeQuery = true)
     Optional<ClientDto> findByRutAndHabilitado(String rut);

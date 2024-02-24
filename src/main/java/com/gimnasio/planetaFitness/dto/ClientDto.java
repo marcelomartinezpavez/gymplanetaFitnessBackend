@@ -2,6 +2,8 @@ package com.gimnasio.planetaFitness.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -12,10 +14,15 @@ import java.util.List;
 
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
-@Table(name = "clients")
+@Table(name = "clients", indexes = @Index(columnList = "numberClient"))
 public class ClientDto implements Serializable {
+
+    @Column( name = "numberClient")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_id_seq")
+    @SequenceGenerator(name = "client_id_seq", sequenceName = "client_id_seq")
+    private Long numberClient;
+
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rut")
     private String rut;
 
@@ -71,6 +78,14 @@ public class ClientDto implements Serializable {
         this.expiredAt = expiredAt;
         this.name = name;
         this.phone = phone;
+    }
+
+    public Long getNumberClient() {
+        return numberClient;
+    }
+
+    public void setNumberClient(Long numberClient) {
+        this.numberClient = numberClient;
     }
 
     public String getRut() {

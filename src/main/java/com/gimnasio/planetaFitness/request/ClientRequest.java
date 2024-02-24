@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.util.Set;
 
 public class ClientRequest {
+
+    private Long numberClient;
     private String rut;
     private String address;
     private String comuna;
@@ -26,6 +28,14 @@ public class ClientRequest {
     private String idPayment;
 
     private long idEmpresa;
+
+    public Long getNumberClient() {
+        return numberClient;
+    }
+
+    public void setNumberClient(Long numberClient) {
+        this.numberClient = numberClient;
+    }
 
     public String getRut() {
         return rut;
