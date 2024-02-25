@@ -54,6 +54,7 @@ public class PaymentsController {
             PaymentMapper paymentsDto = new PaymentMapper();
             ClientMapper clientDto = new ClientMapper();
 
+            clientDto.setNumberClient(payment.getClient().getNumberClient());
             clientDto.setRut(payment.getClient().getRut());
             clientDto.setAddress(payment.getClient().getAddress());
             clientDto.setComuna(payment.getClient().getComuna());
@@ -102,12 +103,11 @@ public class PaymentsController {
     ResponseEntity getPaymentByCliente(@PathVariable String rutCliente) {
 
         List<PaymentsDto> paymentsDtoList = paymentsRepository.findByRutCliente(rutCliente);
-
         List <PaymentsDto> resp = new ArrayList<>();
-
         for(PaymentsDto payment: paymentsDtoList){
             PaymentsDto paymentsDto = new PaymentsDto();
             ClientDto clientDto = new ClientDto();
+            clientDto.setNumberClient(payment.getClient().getNumberClient());
             clientDto.setRut(payment.getClient().getRut());
             clientDto.setAddress(payment.getClient().getAddress());
             clientDto.setComuna(payment.getClient().getComuna());
@@ -131,7 +131,6 @@ public class PaymentsController {
             resp.add(paymentsDto);
         }
         return new ResponseEntity<>(resp, HttpStatus.OK);
-
     }
 
     @PostMapping(path = "/insert",
@@ -162,6 +161,7 @@ public class PaymentsController {
         }
 
         ClientDto clientDto = new ClientDto();
+        clientDto.setNumberClient(clientDtoOptional.get().getNumberClient());
         clientDto.setRut(clientDtoOptional.get().getRut());
         clientDto.setAddress(clientDtoOptional.get().getAddress());
         clientDto.setComuna(clientDtoOptional.get().getComuna());
