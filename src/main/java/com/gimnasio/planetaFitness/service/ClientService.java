@@ -10,6 +10,8 @@ public interface ClientService {
 
     ResponseEntity getClientByRut(String rut);
 
+    ResponseEntity getClientByNumber(long numberClient);
+
     ResponseEntity getClientByName(String name);
 
     ResponseEntity getClienteByLikeRut(String rut);

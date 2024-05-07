@@ -6,11 +6,13 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -61,6 +63,10 @@ public class ClientDto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "empresa_id")
     private EmpresaDto empresa;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @Column(name = "reserva")
+    private Set<ReservaDto> reserva;
 
     public ClientDto(){}
 

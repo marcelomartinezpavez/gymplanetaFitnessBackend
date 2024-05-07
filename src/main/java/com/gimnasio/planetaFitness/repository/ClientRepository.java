@@ -20,6 +20,9 @@ public interface ClientRepository extends JpaRepository<ClientDto, Long> {
     @Query(value = "select * from clients c where c.rut = :rut", nativeQuery = true)
     Optional<ClientDto> findByRutAndHabilitado(String rut);
 
+    @Query(value = "select * from clients c where c.number_client = :numberClient", nativeQuery = true)
+    Optional<ClientDto> findByNumberAndHabilitado(long numberClient);
+
     @Query(value = "select * from clients where name like :name%", nativeQuery = true)
     Optional<ClientDto> getClientByName(String name);
 

@@ -43,6 +43,12 @@ public class ClientController {
         return clienteService.getClientByRut(rut);
     }
 
+    @GetMapping(value = "/{numberClient}", produces = "application/json")
+    @CrossOrigin(origins = "*")
+    public @ResponseBody ResponseEntity getClienteByNumber(@PathVariable long numberClient) {
+        return clienteService.getClientByNumber(numberClient);
+    }
+
     @GetMapping(value = "/name/{name}", produces = "application/json")
     @CrossOrigin(origins = "*")
     public @ResponseBody ResponseEntity getClienteByName(@PathVariable String name) {
